@@ -1,15 +1,16 @@
 let cor = document.querySelector('#rgb-color')
+let pontosAtuais = 0
 function coresIniciais() {
     function corCerta() { // Vai mudar o texto da cor a ser adivinhada
         cor.innerText = '(' + Math.floor(Math.random() * 256) + ', ' + Math.floor(Math.random() * 256) + ', ' + Math.floor(Math.random() * 256) + ')'
     }
     corCerta()
-    
+
     function geradorCores() { // Vai gerar as cores dos circulos
         let cores = document.querySelectorAll('.ball')
-        let numb = Math.floor(Math.random() * 6)
+        let number = Math.floor(Math.random() * 6)
         for(let index = 0; index < cores.length; index += 1 ) {
-            if (index == numb) {
+            if (index == number) {
                 cores[index].style.backgroundColor = 'rgb' + cor.innerText
             } else {
             cores[index].style.backgroundColor = 'rgb(' + Math.floor(Math.random() * 256) + ', ' + Math.floor(Math.random() * 256) + ', ' + Math.floor(Math.random() * 256) + ')'
@@ -28,12 +29,14 @@ colors.addEventListener('click', function (event) {
     } else {
     if (event.target.className == 'ball') {
         if('rgb' + cor.innerText == window.getComputedStyle(event.target).getPropertyValue("background-color")) { 
+            pontosAtuais += 3
             text.innerText = 'Acertou!'
         } else {
             text.innerText = 'Errou! Tente novamente!'
         }
     } else {
     }
+    placar() // Se não tivesse isso o placar ficaria pra sempre no 0
 }
 })
 
@@ -42,3 +45,10 @@ document.querySelector('#reset-game').addEventListener('click', function() {
     coresIniciais()
     text.innerText = 'Escolha uma cor'
 })
+
+// Placar
+function placar() {
+    let eita = document.querySelector('#score')
+    eita.innerText = `Placar: ${pontosAtuais}`
+}
+placar() 

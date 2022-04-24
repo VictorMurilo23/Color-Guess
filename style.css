@@ -9,3 +9,8 @@
     width: 75px;
     display: inline-block;
 }
+
+#reset-game {
+    width: 150px;
+    height: 30px;
+}

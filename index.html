@@ -1,34 +1,33 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Color guess</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <header>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
         <h1 id="title">Adivinhe a cor!</h1>
-    </header>
-
-    <section>
-        <p id="rgb-color">(168, 34, 1)</p>
+      </header>
+      <section>
         <p id="score"></p>
-    </section>
-
-
-        <div id="colors">
-            <div class="ball"></div>
-            <div class="ball"></div>
-            <div class="ball"></div>
-            <div class="ball"></div>
-            <div class="ball"></div>
-            <div class="ball"></div>
-        </div>
-        <h2 id="answer">Escolha uma cor</h2>
-        <button id="reset-game">Reiniciar o jogo</button>
+        <p class="correctColor">Cor correta: <span id="rgb-color">(168, 34, 1)</span></p>
+      </section>
+      <div id="colors">
+        <div class="ball"></div>
+        <div class="ball"></div>
+        <div class="ball"></div>
+        <div class="ball"></div>
+        <div class="ball"></div>
+        <div class="ball"></div>
+      </div>
+      <h2 id="answer">Escolha uma cor</h2>
+      <button id="reset-game">Reiniciar o jogo</button>
+    </div>
 
     <script src="script.js"></script>
-</body>
+  </body>
 </html>

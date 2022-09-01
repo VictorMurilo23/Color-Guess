@@ -1,54 +1,73 @@
-let cor = document.querySelector('#rgb-color')
-let pontosAtuais = 0
-function coresIniciais() {
-    function corCerta() { // Vai mudar o texto da cor a ser adivinhada
-        cor.innerText = '(' + Math.floor(Math.random() * 256) + ', ' + Math.floor(Math.random() * 256) + ', ' + Math.floor(Math.random() * 256) + ')'
-    }
-    corCerta()
+const correctColor = document.querySelector('#rgb-color');
+const colorsContainer = document.querySelector('#colors');
+const answerText = document.querySelector('#answer');
+let score = 0;
 
-    function geradorCores() { // Vai gerar as cores dos circulos
-        let cores = document.querySelectorAll('.ball')
-        let number = Math.floor(Math.random() * 6)
-        for(let index = 0; index < cores.length; index += 1 ) {
-            if (index == number) {
-                cores[index].style.backgroundColor = 'rgb' + cor.innerText
-            } else {
-            cores[index].style.backgroundColor = 'rgb(' + Math.floor(Math.random() * 256) + ', ' + Math.floor(Math.random() * 256) + ', ' + Math.floor(Math.random() * 256) + ')'
-            }
-        }
-    }
-    geradorCores()
+function chooseCorrectColor() {
+  correctColor.innerText = `(${
+    Math.floor(Math.random() * 256)
+  }, ${
+    Math.floor(Math.random() * 256)
+  }, ${
+    Math.floor(Math.random() * 256)
+  })`;
 }
-window.onload = coresIniciais()
 
-// Vai verificar se você clicou na cor correta
-let colors = document.querySelector('#colors')
-let text = document.querySelector('#answer')
-colors.addEventListener('click', function (event) {
-    if (text.innerText !== 'Escolha uma cor') { // Vai fazer com que você só tenha uma tentativa
+function generateColors() {
+  const colors = document.querySelectorAll('.ball');
+  const randomNumber = Math.floor(Math.random() * 6);
+  for (let index = 0; index < colors.length; index += 1) {
+    if (index === randomNumber) {
+      colors[index].style.backgroundColor = `rgb${correctColor.innerText}`;
     } else {
-    if (event.target.className == 'ball') {
-        if('rgb' + cor.innerText == window.getComputedStyle(event.target).getPropertyValue("background-color")) { 
-            pontosAtuais += 3
-            text.innerText = 'Acertou!'
-        } else {
-            text.innerText = 'Errou! Tente novamente!'
-        }
-    } else {
+      colors[index].style.backgroundColor = `rgb(${
+        Math.floor(Math.random() * 256)
+      }, ${
+        Math.floor(Math.random() * 256)
+      }, ${
+        Math.floor(Math.random() * 256)
+      })`;
     }
-    placar() // Se não tivesse isso o placar ficaria pra sempre no 0
+  }
 }
-})
 
-// Botão de reiniciar o jogo
-document.querySelector('#reset-game').addEventListener('click', function() {
-    coresIniciais()
-    text.innerText = 'Escolha uma cor'
-})
-
-// Placar
-function placar() {
-    let eita = document.querySelector('#score')
-    eita.innerText = `Placar: ${pontosAtuais}`
+function changeScore() {
+  const scoreElement = document.querySelector('#score');
+  scoreElement.innerText = `Placar: ${score}`;
+  localStorage.setItem('score', score);
 }
-placar() 
+
+function initialColorsAndScore() {
+  chooseCorrectColor();
+  generateColors();
+  changeScore();
+}
+
+window.onload = () => {
+  const savedScore = localStorage.getItem('score') || 0;
+  score = savedScore;
+  initialColorsAndScore();
+};
+
+function verifyAnswer(elemento) {
+  return `rgb${correctColor.innerText}` === window
+    .getComputedStyle(elemento)
+    .getPropertyValue('background-color');
+}
+
+colorsContainer.addEventListener('click', (event) => {
+  if (answerText.innerText === 'Escolha uma cor' && event.target.className === 'ball') {
+    if (verifyAnswer(event.target)) {
+      score += 3;
+      answerText.innerText = 'Acertou!';
+    } else {
+      answerText.innerText = 'Errou! Tente novamente!';
+    }
+  }
+  changeScore();
+});
+
+document.querySelector('#reset-game').addEventListener('click', () => {
+  initialColorsAndScore();
+  answerText.innerText = 'Escolha uma cor';
+});

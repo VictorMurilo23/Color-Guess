@@ -9,7 +9,7 @@ html {
 }
 
 body {
-  background-image: linear-gradient(rgb(236, 206, 236), white);
+  background-image: linear-gradient(rgba(255, 206, 255, 0.822), white);
   width: 100%;
 }
 

@@ -45,7 +45,7 @@ function initialColorsAndScore() {
 
 window.onload = () => {
   const savedScore = localStorage.getItem('score') || 0;
-  score = savedScore;
+  score = Number(savedScore);
   initialColorsAndScore();
 };
 
